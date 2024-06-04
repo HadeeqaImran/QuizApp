@@ -1,33 +1,13 @@
-const readline = require('readline');
+const readlineSync = require('readline-sync');
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: true
-});
-
-const getChar = () => {
-  return new Promise((resolve) => {
-    const onDataHandler = (key) => {
-      process.stdin.setRawMode(false);
-      process.stdin.pause();
-      rl.output.write('\n');
-      process.stdin.removeListener('data', onDataHandler);
-      resolve(key.toString().trim());
-    };
-
-    process.stdin.setRawMode(true);
-    process.stdin.resume();
-    process.stdin.on('data', onDataHandler);
-  });
+const getChar = (promptText) => {
+  const input = readlineSync.question(promptText);
+  return input;
 };
 
 const getLine = (promptText) => {
-  return new Promise((resolve) => {
-    rl.question(promptText, (input) => {
-      resolve(input);
-    });
-  });
+  const input = readlineSync.question(promptText);
+  return input.trim();
 };
 
 module.exports = { getChar, getLine };

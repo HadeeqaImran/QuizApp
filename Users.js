@@ -1,43 +1,43 @@
-const { writeCsv } = require('./CsvUtilities');
+const { writeCsv, appendToCsv, readCsv } = require('./CsvUtilities');
 
-const isLoggedIn = (data, name) => {
-  const user = data.find(user => user.name === name);
+const isLoggedIn = (filePath, headers, name) => {
+  const users = readCsv(filePath, headers);
+  const user = users.find(user => user.name === name);
   if (user) {
-    return user.login === '1';
+    if (user.login === '1') {
+      console.log("LoggedIn");
+      return true;
+    } else {
+      return false;
+    }
   }
-  return false;
 };
 
-const Login = async (data, name, password) => {
-  const user = data.find(user => user.name === name);
+// Reading some empty row at end and inserting it
+const Login = (filePath, headers, name, password) => {
+  let users = readCsv(filePath, headers);
+  let user = users.find(user => user.name === name && user.password === password);
   if (user) {
     if (user.login === '1') {
       console.log("User Already Logged In");
     } else {
       user.login = '1';
-      try {
-        await writeCsv("users.csv", data);
-        console.log("User Logged In Successfully");
-      } catch (error) {
-        console.log("User Login Failed!");
-      }
+      writeCsv(filePath, users);
+      console.log("User Logged In Successfully");
     }
   } else {
     console.log("User Not Found");
   }
 };
 
-const Logout = async (data, name) => {
-  const user = data.find(user => user.name === name);
-  if (user) {
+const Logout = (filePath, headers, name) => {
+  const users = readCsv(filePath, headers);
+  const user = users.find(user => user.name === name);
+    if (user) {
     if (user.login === '1') {
       user.login = '0';
-      try {
-        await writeCsv("users.csv", data);
-        console.log("User Logged Out Successfully");
-      } catch (error) {
-        console.log("User Logout Failed!");
-      }
+      writeCsv(filePath, users);
+      console.log("User Logged Out Successfully");
     } else {
       console.log("User Already Logged Out");
     }
@@ -46,18 +46,15 @@ const Logout = async (data, name) => {
   }
 };
 
-module.exports = { isLoggedIn, Login, Logout };
+const Signup = (filePath, username, password ) => {
+  row = [username, password, 0, 0]
+  appendToCsv(filePath, row);
+}
+const UpdateScore = (filePath, headers, username, score) => {
+  let users = readCsv(filePath, headers);
+  let user = users.find(user => user.name === username);
+  user.score = score;
+  writeCsv(filePath, users);
+};
 
-// isLoggedIn()
-// Login
-// Do not let call anyother without login
-// Start Quiz
-// Give 5 random questions
-// Total Score
-// Update score in CSV
-
-// ------------------------------ Extension ------------------------------
-// Make admin user to call read and update securely
-// View Account
-// Update Account Information 
-// Delete Account
+module.exports = { isLoggedIn, Login, Signup, Logout, UpdateScore };
