@@ -1,7 +1,7 @@
 const { login, logout, signup, isLoggedIn, updateScore } = require('./Src/Users');
 const { quiz } = require('./Src/Quiz');
-const { getChar, getLine } = require('./Src/InputHandler');
-const { hashInput } = require('./Src/Hashing')
+const { getChar, getLine } = require('./Services/InputHandler');
+const { hashInput } = require('./Services/Hashing')
 function main() {
   const DataFiles = {
     users: "Database/users.csv",
@@ -16,6 +16,7 @@ function main() {
   let username = "";
   let password = "";
   let score = 0;
+  console.clear();
 
   while (true) {
     console.log('\n----------------------------------\n');
@@ -25,10 +26,9 @@ function main() {
     console.log('3. Start Quiz');
     console.log('4. Logout');
     console.log('5. Exit');
-    const choice = getChar();
-    console.log('\n----------------------------------\n');
-    // camel case function names
-    // console experience
+    const choice = getChar("Enter choice 1, 2, 3, 4, 5: ");
+    console.log('\n---------------------------, -------\n');
+    console.clear()
     switch (choice) {
       case '1':
         username = getLine('Enter username: ', 'text');

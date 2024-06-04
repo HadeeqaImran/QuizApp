@@ -1,4 +1,4 @@
-const { writeCSV, appendToCSV, readCSV } = require('./CSVUtilities');
+const { writeCSV, appendToCSV, readCSV } = require('../Services/CSVUtilities');
 
 const isLoggedIn = (filePath, headers, name) => {
   const users = readCSV(filePath, headers);

@@ -11,10 +11,11 @@ npm install CSV-parser fast-CSV
 # Fixes
 1. All function names in camel case and Csv -> CSV 
 2. Astrik input show for password. Does not let backspace so do 2 inputs for confirmation.
-3. Duplicate username signin check added.
+3. Duplicate username signup check added.
+4. Passwords stored with hashes
+5. Need for enter key removed. Key input is enough.
+6. 
+
 
 Pending:
-clear console
-remove enter option from the enter choice
-hashing passwords
 folder structure

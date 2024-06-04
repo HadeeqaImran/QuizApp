@@ -1,5 +1,5 @@
 const fs = require('fs');
-// CSV 
+
 const readCSV = (filePath, headers) => {
   const data = fs.readFileSync(filePath, 'utf-8');
   const rows = data.split('\n').slice(1); // Skip headers
@@ -13,7 +13,6 @@ const readCSV = (filePath, headers) => {
   });
 };
 
-// Check unique username
 const appendToCSV = (filePath, newRow) => {
   const CSVRow = '\n' + Object.values(newRow).join(',');
   try {

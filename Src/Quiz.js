@@ -1,10 +1,14 @@
-const { readCSV } = require('./CSVUtilities');
-const { getChar } = require('./InputHandler');
+const { readCSV } = require('../Services/CSVUtilities');
+const { getChar } = require('../Services/InputHandler');
 
 const quiz = (filePath, headers) => {
   let score = 0;
   const data = readCSV(filePath, headers);
-  const uniqueRandomNumbers = [...new Set(Array(5).fill(0).map(() => Math.floor(Math.random() * 20)))];
+  let uniqueRandomNumbersSet = new Set();
+  while(uniqueRandomNumbersSet.size < 5) {
+    uniqueRandomNumbersSet.add(Math.floor(Math.random() * 20))
+  }
+  let uniqueRandomNumbers = [...uniqueRandomNumbersSet];
   for (let i = 0; i < 5; i++) {
     const randomNumber = Math.floor(Math.random() * data.length);
     console.log(data[uniqueRandomNumbers[i]].question);

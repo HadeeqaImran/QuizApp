@@ -1,7 +1,7 @@
 const readlineSync = require('readline-sync');
 
 const getChar = (promptText) => {
-  const input = readlineSync.question(promptText);
+  const input = readlineSync.keyIn(promptText, { limit: 'abcdefghijklmnopqrstuvwxyz12345' });
   return input;
 };
 
