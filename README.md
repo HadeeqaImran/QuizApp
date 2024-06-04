@@ -14,8 +14,4 @@ npm install CSV-parser fast-CSV
 3. Duplicate username signup check added.
 4. Passwords stored with hashes
 5. Need for enter key removed. Key input is enough.
-6. 
-
-
-Pending:
-folder structure
+6. Folder Structure Done
