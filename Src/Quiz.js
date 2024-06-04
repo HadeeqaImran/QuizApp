@@ -1,9 +1,9 @@
-const { readCsv } = require('./CsvUtilities');
+const { readCSV } = require('./CSVUtilities');
 const { getChar } = require('./InputHandler');
 
-const Quiz = (filePath, headers, username) => {
+const quiz = (filePath, headers) => {
   let score = 0;
-  const data = readCsv(filePath, headers);
+  const data = readCSV(filePath, headers);
   const uniqueRandomNumbers = [...new Set(Array(5).fill(0).map(() => Math.floor(Math.random() * 20)))];
   for (let i = 0; i < 5; i++) {
     const randomNumber = Math.floor(Math.random() * data.length);
@@ -21,4 +21,4 @@ const Quiz = (filePath, headers, username) => {
   return score;
 };
 
-module.exports = { Quiz };
+module.exports = { quiz };

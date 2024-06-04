@@ -1,7 +1,7 @@
-const { writeCsv, appendToCsv, readCsv } = require('./CsvUtilities');
+const { writeCSV, appendToCSV, readCSV } = require('./CSVUtilities');
 
 const isLoggedIn = (filePath, headers, name) => {
-  const users = readCsv(filePath, headers);
+  const users = readCSV(filePath, headers);
   const user = users.find(user => user.name === name);
   if (user) {
     if (user.login === '1') {
@@ -14,15 +14,17 @@ const isLoggedIn = (filePath, headers, name) => {
 };
 
 // Reading some empty row at end and inserting it
-const Login = (filePath, headers, name, password) => {
-  let users = readCsv(filePath, headers);
+// Password astriks
+const login = (filePath, headers, name, password) => {
+  let users = readCSV(filePath, headers);
   let user = users.find(user => user.name === name && user.password === password);
   if (user) {
+    // Convert this to int and check
     if (user.login === '1') {
       console.log("User Already Logged In");
     } else {
       user.login = '1';
-      writeCsv(filePath, users);
+      writeCSV(filePath, users);
       console.log("User Logged In Successfully");
     }
   } else {
@@ -30,31 +32,35 @@ const Login = (filePath, headers, name, password) => {
   }
 };
 
-const Logout = (filePath, headers, name) => {
-  const users = readCsv(filePath, headers);
+const logout = (filePath, headers, name) => {
+  const users = readCSV(filePath, headers);
   const user = users.find(user => user.name === name);
     if (user) {
     if (user.login === '1') {
       user.login = '0';
-      writeCsv(filePath, users);
+      writeCSV(filePath, users);
       console.log("User Logged Out Successfully");
-    } else {
-      console.log("User Already Logged Out");
     }
   } else {
     console.log("User Not Found");
   }
 };
 
-const Signup = (filePath, username, password ) => {
+const signup = (filePath, headers, username, password ) => {
+  const users = readCSV(filePath, headers);
+  const user = users.find(user => user.name === username);
+    if (user) {
+      console.log("User already exists")
+      return
+    }
   row = [username, password, 0, 0]
-  appendToCsv(filePath, row);
+  appendToCSV(filePath, row);
 }
-const UpdateScore = (filePath, headers, username, score) => {
-  let users = readCsv(filePath, headers);
+const updateScore = (filePath, headers, username, score) => {
+  let users = readCSV(filePath, headers);
   let user = users.find(user => user.name === username);
   user.score = score;
-  writeCsv(filePath, users);
+  writeCSV(filePath, users);
 };
 
-module.exports = { isLoggedIn, Login, Signup, Logout, UpdateScore };
+module.exports = { isLoggedIn, login, signup, logout, updateScore };
